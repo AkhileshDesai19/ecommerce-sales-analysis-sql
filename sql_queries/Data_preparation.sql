@@ -109,8 +109,8 @@ SELECT DISTINCT customer_city FROM customers;
 -- Dealing with nulls 
 
 -- FOR  order_delivered_customer_date value is null
- SELECT order_status,
- COUNT(*)
+SELECT order_status,
+COUNT(*)
 FROM orders
 WHERE order_delivered_customer_date IS NULL
 GROUP BY order_status;
@@ -220,6 +220,223 @@ SELECT DISTINCT order_status FROM orders;
 -- Data quality is good and suitable for analysis.
 
 --------------------------------------------------------
+-- remain order_item, products,seller
+
+--                PRODUCTS
+
+SELECT * FROM products;
+
+-- Checking Null Values
+
+SELECT * FROM products
+WHERE product_id IS NULL;
+
+SELECT * FROM products
+WHERE product_category_name IS NULL;  -- 610 null values so fill it with unknown
+-- FILLING NULL VALUES with unknown
+UPDATE products
+SET product_category_name = 'Unknown'
+WHERE product_category_name IS NULL;
+
+SELECT * FROM products
+WHERE product_category_name IS NULL;
+---------------------------------------------
+
+
+SELECT * FROM products                      
+WHERE product_name_lenght IS NULL;              -- 610 null
+--  fill 610 null values with 0
+UPDATE products
+SET product_name_lenght = 0
+WHERE product_name_lenght IS NULL;
+
+-----------------------------------------
+
+
+SELECT * FROM products                          -- 610 null
+WHERE product_description_lenght IS NULL;
+-- fill null values with 0
+UPDATE products
+SET product_description_lenght = 0
+WHERE product_description_lenght IS NULL;
+ -------------------------------------------------------------
+ 
+SELECT * FROM products
+WHERE product_photos_qty  -610
+IS NULL;
+-- filling null values
+UPDATE products
+SET product_photos_qty = 0
+WHERE product_photos_qty IS NULL;
+
+-------------------------------------------------------------------
+
+
+
+SELECT * FROM products                  -- 2 NULL
+WHERE product_weight_g IS NULL;
+
+SELECT * FROM products                 -- 2 null
+WHERE product_length_cm IS NULL;
+
+SELECT * FROM products                  -- 2 null
+WHERE product_height_cm IS NULL;
+
+SELECT * FROM products                     -- 2 NULL
+WHERE product_width_cm IS NULL;
+
+-- ignoring a small amount of null values that is 2
+
+
+--              duplicates checking
+SELECT product_id, COUNT(*) AS id_count
+FROM products
+GROUP BY product_id
+HAVING COUNT(*) >1;
+
+
+--  created a row number now let use in a cte 
+SELECT *,
+ROW_NUMBER() OVER(PARTITION BY product_id,product_category_name,
+product_name_lenght,
+product_description_lenght,product_photos_qty,product_weight_g,
+product_length_cm,
+product_height_cm,product_width_cm 
+ORDER BY product_id,product_category_name,
+product_name_lenght,
+product_description_lenght,product_photos_qty,product_weight_g,
+product_length_cm,
+product_height_cm,product_width_cm ) AS row_numb
+FROM products;
+
+
+WITH CTE AS(
+SELECT *,
+ROW_NUMBER() OVER(PARTITION BY product_id,product_category_name,
+product_name_lenght,
+product_description_lenght,product_photos_qty,product_weight_g,
+product_length_cm,
+product_height_cm,product_width_cm 
+ORDER BY product_id,product_category_name,
+product_name_lenght,
+product_description_lenght,product_photos_qty,product_weight_g,
+product_length_cm,
+product_height_cm,product_width_cm ) AS row_numb
+FROM products
+)
+SELECT * FROM CTE
+WHERE row_numb > 1;
+
+--  No duplicates are presnt in product table
+
+SELECT * FROM products;
+
+-------------------------------------------------------------------------
+
+      --  SELLER
+
+SELECT * FROM sellers;
+
+-- Checking for nulls
+SELECT * FROM sellers 
+WHERE seller_id IS NULL;
+
+SELECT * FROM sellers 
+WHERE seller_zip_code_prefix IS NULL;
+
+SELECT * FROM sellers 
+WHERE seller_city IS NULL;
+
+SELECT * FROM sellers 
+WHERE seller_state IS NULL;
+
+-- No nulls values present 
+
+--  Check for duplicates
+
+SELECT *,
+ROW_NUMBER() OVER(PARTITION BY  seller_id,seller_zip_code_prefix,
+seller_city, seller_state 
+ORDER BY seller_id,seller_zip_code_prefix,
+seller_city, seller_state) AS rn
+FROM sellers;
+
+
+WITH CTE AS (
+SELECT *,
+ROW_NUMBER() OVER(PARTITION BY  seller_id,seller_zip_code_prefix,
+seller_city, seller_state 
+ORDER BY seller_id,seller_zip_code_prefix,
+seller_city, seller_state) AS rn
+FROM sellers
+)
+SELECT * FROM CTE
+WHERE rn > 1;
+
+--  No duplicates
+
+SELECT * FROM sellers;
+
+
+-- ----------------------------------------------------------------------
+
+--  order_items
+
+SELECT * FROM order_items;
+
+
+--  Null Check
+SELECT * FROM order_items 
+WHERE order_id IS NULL;
+
+
+SELECT * FROM order_items 
+WHERE order_item_id IS NULL;
+
+SELECT * FROM order_items 
+WHERE product_id IS NULL;
+
+SELECT * FROM order_items 
+WHERE seller_id IS NULL;
+
+SELECT * FROM order_items 
+WHERE shipping_limit_date IS NULL;
+
+SELECT * FROM order_items 
+WHERE price IS NULL;
+
+SELECT * FROM order_items 
+WHERE freight_value IS NULL; 
+
+
+--  No nUll values in tables
+
+--  DUPLICATE CHECKS
+
+
+SELECT* ,
+ROW_NUMBER() OVER(PARTITION BY order_id,order_item_id,product_id,seller_id,
+shipping_limit_date,price,freight_value
+ORDER BY order_id,order_item_id,product_id,seller_id,
+shipping_limit_date,price,freight_value) AS rnu
+FROM order_items;
+
+
+WITH CTE AS(
+SELECT* ,
+ROW_NUMBER() OVER(PARTITION BY order_id,order_item_id,product_id,seller_id,
+shipping_limit_date,price,freight_value
+ORDER BY order_id,order_item_id,product_id,seller_id,
+shipping_limit_date,price,freight_value) AS rnu
+FROM order_items
+)
+SELECT * FROM CTE 
+WHERE rnu > 1;
+
+
+--  No duplicates detected 
+
+
 
 
 
