@@ -1,123 +1,101 @@
-## E-Commerce Sales Analysis
-Project Objective
+Business Requirements
+Project Title
 
-Analyze e-commerce sales data to identify customer behavior, sales trends, product performance, seller performance, and revenue-generating opportunities.
+# Olist E-commerce Sales Analysis using SQL
+
+# Business Objective
+
+The objective of this project is to analyze Olist's e-commerce sales data to identify trends in customer behavior, product performance, seller performance, revenue generation, and operational efficiency. The insights generated from this analysis will help support data-driven business decisions aimed at improving sales, customer retention, and overall business performance.
 
 # Business Goals
-1.Measure overall business performance.
-2.Identify top-performing products.
-3.Identify top-performing sellers.
-4.Analyze customer purchasing behavior.
-5.Discover sales trends over time.
-6.Determine regional sales performance.
-7.Identify high-value customers.
-8.Generate actionable business insights.
+1. Analyze overall sales performance.
+2. Identify high-performing products and product categories.
+3. Identify top-performing sellers.
+4. Understand customer purchasing behavior.
+5. Measure revenue trends over time.
+6. Evaluate order fulfillment and delivery performance.
+7. Provide actionable business recommendations based on data.
 
-Phase 1: Data Preparation
-Tasks
-Import CSV files into PostgreSQL.
-Check data types.
-Handle missing values.
-Detect duplicates.
-Validate relationships between tables.
-Create required tables.
+# Dataset Overview
 
-Phase 2: Data Modeling
+The project uses the Olist Brazilian E-commerce dataset.
 
-Create:
+# Tables Used
 
-Fact Table
-fact_orders
-Dimension Tables
-dim_customers
-dim_products
-dim_sellers
-dim_payments
-dim_location
+Customers
+Orders
+Order Items
+Products
+Sellers
 
-Create relationships between fact and dimension tables.
+# Business Questions
 
-Phase 3: Exploratory Data Analysis (EDA)
+Product Analysis
 
-Questions
-Total number of orders.
-Total customers.
-Total products.
-Total sellers.
-Total revenue.
-Average order value.
-Revenue distribution.
-Order status distribution.
-Monthly order volume.
-Customer distribution by state.
+1. Which are the top 10 products by revenue?
+Which product categories generate the highest revenue?
 
-Phase 4: KPI Development
+2. What percentage of total revenue does each product category contribute?
 
-KPIs
-Total Revenue
-Total Orders
-Total Customers
-Average Order Value
-Revenue Per Customer
-Revenue Per Seller
-Monthly Revenue Growth
+Seller Analysis
 
-{One improvement I'd make
-After every analysis query, write:
-Business Question
-Which state generates the highest revenue?
-SQL Query
-(your query)
-Insight
-Karnataka generated the highest revenue.
-Recommendation
-Increase marketing spend and seller acquisition in Karnataka.}
+3. Which sellers generate the highest revenue?
+What percentage of total revenue does each seller contribute?
+ 
+4. Which sellers fulfill the highest number of unique orders?
 
-This makes your project look more like business analytics rather than just SQL practice.
+Revenue Analysis
 
-Phase 5: Business Analysis
+5. How has monthly revenue changed over time?
 
-# Customer Analysis
-Top 10 customers by spending.
-Customers with highest order frequency.
-Customer distribution by state.
-Repeat customer analysis.
+6. Which states generate the highest revenue?
 
-# Product Analysis
-Top 10 products by revenue.
-Top product categories.
-Lowest-performing products.
-Product category contribution.
+Customer Analysis
 
-# Seller Analysis
-Top sellers by revenue.
-Seller ranking.
-Seller contribution percentage.
+7. Who are the top 10 customers by total spending?
 
-# Revenue Analysis
-Revenue by month.
-Revenue by state.
-Revenue by city.
-Peak sales periods.
+8. How many repeat customers are there?
 
-# Order Analysis
-Orders by weekday.
-Orders by month.
-Order status analysis.
-Cancellation analysis.
+Order & Delivery Analysis
+
+9. What is the distribution of order statuses?
+
+10. What is the average delivery time, and how many orders are delivered after the estimated delivery date?
 
 
-# Github Repo
-README.md
-Business_Requirements.md
 
-dataset/
+# Expected Business Outcomes
 
-sql_scripts/
-├── 01_data_preparation.sql
-├── 02_eda.sql
-├── 03_kpi_analysis.sql
-├── 04_business_analysis.sql
-├── 05_advanced_analysis.sql
+The analysis should help the business:
 
-screenshots/
+Identify the products generating the highest revenue.
+
+Focus marketing efforts on high-performing product categories.
+
+Recognize top-performing sellers and strengthen seller relationships.
+
+Understand customer purchasing and repeat buying behavior.
+
+Track revenue growth over time.
+
+Identify high-performing geographical markets.
+
+Monitor order fulfillment performance.
+
+Improve delivery efficiency and customer satisfaction.
+
+# Tools Used
+PostgreSQL
+SQL
+VS Code
+Git & GitHub
+
+
+Deliverables
+Data Preparation
+Data Cleaning
+Exploratory Data Analysis (EDA)
+KPI Development
+Business Analysis
+Business Insights
+Business Recommendations
